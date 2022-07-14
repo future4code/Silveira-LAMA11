@@ -1,0 +1,9 @@
+POST http://localhost:3003/user/signup
+Content-Type: application/json
+
+{
+    "name": "Gandalf the gray",
+    "email": "BestMagician@magic.com",
+    "password": "youShallNotPass",
+    "role": "ADMIN"
+}
