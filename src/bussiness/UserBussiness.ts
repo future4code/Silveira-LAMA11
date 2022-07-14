@@ -2,11 +2,13 @@ import { UserDatabase } from "../data/UserDatabase";
 import { HashManager } from "../services/HashManager";
 import { IdGenerator } from "../services/idGenerator";
 import { Authenticator } from "../services/Authenticator";
-import { UserInputDTO } from "../model/UserTypes";
+import { UserInputDTO, UserInputLoginDTO } from "../model/UserTypes";
 import {
   CustomError,
   InvalidEmail,
   InvalidName,
+  InvalidPassword,
+  InvalidUser,
   InvalidUserRegister,
   PasswordTooShort,
 } from "../error/customErrors";
@@ -57,12 +59,44 @@ export class UserBussiness {
       };
 
       await this.userDatabase.insertUser(newUser);
-      console.log("cheguei");
+
       const token = this.authenticator.generate(payload);
 
       return token;
     } catch (error: any) {
       throw new CustomError(500, error.message);
     }
+  };
+
+  public login = async (inputLogin: UserInputLoginDTO) => {
+    try {
+      const { email, password } = inputLogin;
+
+      if (!email || !password) {
+        throw new CustomError(422, "Preencha os campos corretamente.");
+      }
+
+      const user = await this.userDatabase.findUserByEmail(email);
+
+      if (!user) {
+        throw new InvalidUser();
+      }
+
+      const checkPassword = await this.hashManager.compare(
+        password,
+        user.getPassword()
+      );
+
+      if (!checkPassword) {
+        throw new InvalidPassword();
+      }
+
+      const token = this.authenticator.generate({
+        id: user.getId(),
+        role: user.getRole(),
+      });
+
+      return token;
+    } catch (error: any) {}
   };
 }

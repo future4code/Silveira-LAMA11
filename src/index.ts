@@ -15,4 +15,5 @@ const userBussiness = new UserBussiness(
 
 const userController = new UserController(userBussiness);
 
-app.post("/user", userController.createUser);
+app.post("/user/singup", userController.createUser);
+app.post("/user/login", userController.login);

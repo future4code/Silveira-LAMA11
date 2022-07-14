@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { UserBussiness } from "../bussiness/UserBussiness";
-import { UserInputDTO } from "../model/UserTypes";
+import { UserInputDTO, UserInputLoginDTO } from "../model/UserTypes";
 
 export class UserController {
   constructor(private userBussiness: UserBussiness) {}
@@ -20,6 +20,20 @@ export class UserController {
       res
         .status(201)
         .send({ message: "Usuário cadastrado com sucesso!", token });
+    } catch (error: any) {}
+  };
+
+  public login = async (req: Request, res: Response) => {
+    try {
+      const { email, password } = req.body;
+
+      const inputLogin: UserInputLoginDTO = {
+        email,
+        password,
+      };
+
+      const token = await this.userBussiness.login(inputLogin);
+      res.status(200).send({ message: "Usuário logado", token });
     } catch (error: any) {}
   };
 }
