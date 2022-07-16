@@ -16,7 +16,7 @@ import {
 } from "../error/customErrors";
 
 
-export class UserBussiness {
+export class UserBusiness {
   constructor(
     private userDatabase: UserDatabase,
     private idGenerator: IdGenerator,

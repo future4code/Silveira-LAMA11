@@ -1,6 +1,6 @@
 import { getBandByIdDTO } from './../types/getBandByIdDTO';
 import { Request, Response } from 'express';
-import { BandBusiness } from '../bussiness/BandBusiness';
+import BandBusiness from '../bussiness/BandBusiness';
 import { createBandInputDTO } from '../types/createBandInputDTO';
 
 export default class BandController {
