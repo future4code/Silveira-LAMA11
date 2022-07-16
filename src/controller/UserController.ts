@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { UserBussiness } from "../bussiness/UserBussiness";
+import { UserBusiness } from "../bussiness/UserBusiness";
 import { UserInputDTO } from "../types/UserInputDTO";
 import { UserInputLoginDTO } from "../types/UserInputLoginDTO";
 
 export class UserController {
-  constructor(private userBussiness: UserBussiness) { }
+  constructor(private userBusiness: UserBusiness) { }
   
   public createUser = async (req: Request, res: Response) => {
     try {
@@ -17,7 +17,7 @@ export class UserController {
         role,
       };
 
-      const token = await this.userBussiness.createUser(inputUser);
+      const token = await this.userBusiness.createUser(inputUser);
 
       res
         .status(201)
@@ -34,7 +34,7 @@ export class UserController {
         password,
       };
 
-      const token = await this.userBussiness.login(inputLogin);
+      const token = await this.userBusiness.login(inputLogin);
       res.status(200).send({ message: "Usuário logado", token });
     } catch (error: any) { }
   };

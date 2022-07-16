@@ -1,4 +1,4 @@
-import { UserBussiness } from '../bussiness/UserBussiness';
+import { UserBusiness } from '../bussiness/UserBusiness';
 import { UserController } from '../controller/UserController';
 import { UserDatabase } from '../data/UserDatabase';
 import { Authenticator } from '../services/Authenticator';
@@ -8,14 +8,14 @@ import express from 'express';
 
 const userRoute = express.Router();
 
-const userBussiness = new UserBussiness(
+const userBusiness = new UserBusiness(
   new UserDatabase(),
   new IdGenerator(),
   new HashManager(),
   new Authenticator()
 );
 
-const userController = new UserController(userBussiness);
+const userController = new UserController(userBusiness);
 
 userRoute.post("/singup", userController.createUser);
 userRoute.post("/login", userController.login);

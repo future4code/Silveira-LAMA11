@@ -14,18 +14,18 @@ export class UserDatabase extends BaseDatabase {
       });
     } catch (error: any) {
       throw new Error(error.message);
-    }
+    };
   };
 
   public findUserByEmail = async (email: string) => {
     try {
-      const result: FindByEmailRes = await UserDatabase.connection("user_LAMA")
+      const result = await UserDatabase.connection("user_LAMA")
         .select("*")
         .where({ email });
 
       return result[0] && User.toUserModel(result[0]);
     } catch (error: any) {
       throw new Error(error.message);
-    }
+    };
   };
-}
+};

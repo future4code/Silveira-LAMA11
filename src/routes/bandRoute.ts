@@ -7,13 +7,13 @@ import express from 'express';
 
 const bandRoute = express.Router();
 
-const bandBussiness = new BandBusiness(
+const bandBusiness = new BandBusiness(
   new BandDataBase(),
   new IdGenerator(),
   new Authenticator()
 );
 
-const bandController = new BandController(bandBussiness);
+const bandController = new BandController(bandBusiness);
 
 bandRoute.post("/create", bandController.createBand);
 bandRoute.post("/get/:id", bandController.getBandById);
