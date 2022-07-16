@@ -1,8 +1,10 @@
-import { UserDatabase } from "../data/UserDatabase";
-import { HashManager } from "../services/HashManager";
-import { IdGenerator } from "../services/idGenerator";
-import { Authenticator } from "../services/Authenticator";
-import { UserInputDTO, UserInputLoginDTO } from "../model/UserTypes";
+import { UserDatabase } from '../data/UserDatabase';
+import { HashManager } from '../services/HashManager';
+import { IdGenerator } from '../services/idGenerator';
+import { Authenticator } from '../services/Authenticator';
+import { UserInputDTO } from '../types/UserInputDTO';
+import { UserInputLoginDTO } from '../types/UserInputLoginDTO';
+import { AuthenticationData, User } from "../model/User";
 import {
   CustomError,
   InvalidEmail,
@@ -12,7 +14,7 @@ import {
   InvalidUserRegister,
   PasswordTooShort,
 } from "../error/customErrors";
-import { AuthenticationData, User } from "../model/User";
+
 
 export class UserBussiness {
   constructor(
@@ -20,7 +22,7 @@ export class UserBussiness {
     private idGenerator: IdGenerator,
     private hashManager: HashManager,
     private authenticator: Authenticator
-  ) {}
+  ) { }
 
   public createUser = async (inputUser: UserInputDTO) => {
     try {
@@ -50,7 +52,7 @@ export class UserBussiness {
       const newUser = new User(id, name, email, hashedPassword, role);
 
       if (userRegistered === newUser) {
-        throw new CustomError(400, "Usuário já cadastrado.");
+        throw new InvalidUserRegister();
       }
 
       const payload: AuthenticationData = {
@@ -97,6 +99,6 @@ export class UserBussiness {
       });
 
       return token;
-    } catch (error: any) {}
+    } catch (error: any) { }
   };
 }
