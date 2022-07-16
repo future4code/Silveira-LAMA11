@@ -15,7 +15,7 @@ export class User {
     protected email: string,
     protected password: string,
     protected role: USER_ROLE
-  ) {}
+  ) { }
 
   public getId() {
     return this.id;
